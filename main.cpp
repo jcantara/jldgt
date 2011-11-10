@@ -1,7 +1,9 @@
-#include <stdio.h>
+#include <iostream>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <SDL.h>
+
+using namespace std;
 
 int main(int argc, char *argv[]){
 
@@ -14,26 +16,19 @@ int main(int argc, char *argv[]){
   int m_iFPSTickCounter = 0;
   int m_iFPSCounter = 0;
   int m_iCurrentFPS = 0;
-
-  //printf("bllah");
-
+  
   if ( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_TIMER ) < 0 ) {
-    printf( "Unable to init SDL: %s\n", SDL_GetError() );
+    cout << "Unable to init SDL: " << SDL_GetError() << endl;
     exit(1);
   }
-
-  //freopen( "CON", "w", stdout );
-  //freopen( "CON", "w", stderr );
 
   atexit(SDL_Quit);
 
   m_pScreen = SDL_SetVideoMode(800, 400, 16, SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_OPENGL);
   if ( !m_pScreen ) {
-    printf("Unable to set video: %s\n", SDL_GetError());
+    cout << "Unable to set video: " << SDL_GetError() << endl;
     exit(1);
   }
-
-  //printf("test1");
 
   m_iElapsedTicks = 0;
   m_iLastTick = 0;
@@ -63,7 +58,6 @@ float rquad = 0.0f;
   m_iNextGameTick = SDL_GetTicks();
 
   while (m_bGameIsRunning) {
-    //printf("asdf");
     int loops = 0;
     while( SDL_GetTicks() >= m_iNextGameTick && loops < 5) {
       SDL_Event event;
@@ -81,9 +75,6 @@ float rquad = 0.0f;
 
       m_iNextGameTick += 10;
       loops++;
-
-      //printf("test");
-
     }
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);   // Clear The Screen And The Depth Buffer
