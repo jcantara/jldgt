@@ -1,1 +1,1 @@
-g++ main.cpp -o sdltest `sdl-config --cflags --libs`
+g++ main.cpp -o sdltest `sdl-config --cflags --libs` -lGL -lGLU
