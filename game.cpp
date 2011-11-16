@@ -105,8 +105,7 @@ void cGame::Physicsloop() {
   }
 }
 
-void cGame::Drawingloop()
-{
+void cGame::Drawingloop() {
   // fps calculation
   m_iElapsedTicks = SDL_GetTicks() - m_iLastTick;
   m_iFPSTickCounter += m_iElapsedTicks;
@@ -130,8 +129,7 @@ void cGame::Drawingloop()
   SDL_GL_SwapBuffers();
 }
 
-int cGame::Go()
-{ 
+int cGame::Go() { 
   Init(); // child class setup
 
   m_iNextGameTick = SDL_GetTicks();
