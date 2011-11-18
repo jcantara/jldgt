@@ -114,7 +114,7 @@ void cGame::Drawingloop() {
     m_iCurrentFPS = m_iFPSCounter;
     m_iFPSCounter = 0;
     m_iFPSTickCounter = 0;
-    //std::cout << m_iCurrentFPS << std::endl;
+    cout << m_iCurrentFPS << endl;
   }
   m_iLastTick = SDL_GetTicks();
 
