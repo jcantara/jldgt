@@ -30,7 +30,7 @@ cGame::cGame() {
   m_iFPSCounter = 0;
   m_iCurrentFPS = 0;
 
-  // opengl 3D init:
+  // opengl init:
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);   // This Will Clear The Background Color To Black
   glClearDepth(1.0);        // Enables Clearing Of The Depth Buffer
   glDepthFunc(GL_LESS);       // The Type Of Depth Test To Do
@@ -38,7 +38,6 @@ cGame::cGame() {
   glShadeModel(GL_SMOOTH);      // Enables Smooth Color Shading
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();       // Reset The Projection Matrix
-  //gluPerspective(45.0f,(GLfloat)800/(GLfloat)400,0.1f,100.0f); // Calculate The Aspect Ratio Of The Window
   glOrtho(0.0f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.0f, 0.0f, 1.0f);
   glMatrixMode(GL_MODELVIEW);
 }
@@ -61,9 +60,11 @@ void cGame::Physicsloop() {
         m_bGameIsRunning = false;
         break;
       case SDL_KEYDOWN:
+        m_bKeysHeld[event.key.keysym.sym] = true;
         KeyDown(event.key.keysym.sym);
         break;
       case SDL_KEYUP:
+        m_bKeysHeld[event.key.keysym.sym] = false;
         KeyUp(event.key.keysym.sym);
         break;
       case SDL_MOUSEMOTION:

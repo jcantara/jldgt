@@ -45,6 +45,7 @@ class cGame
     void Drawingloop();
     bool m_bGameIsRunning;
     SDL_Surface* m_pScreen;
+    bool m_bKeysHeld[SDLK_LAST];
   private:
     Uint32 m_iNextGameTick;
 
