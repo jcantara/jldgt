@@ -18,7 +18,7 @@ cGame::cGame() {
   atexit(SDL_Quit);
 
   // create a new window
-  m_pScreen = SDL_SetVideoMode(800, 600, 16, SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_OPENGL);
+  m_pScreen = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 16, SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_OPENGL);
   if ( !m_pScreen ) {
     cout << "Unable to set video: " << SDL_GetError() << endl;
     exit(1);
@@ -38,7 +38,8 @@ cGame::cGame() {
   glShadeModel(GL_SMOOTH);      // Enables Smooth Color Shading
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();       // Reset The Projection Matrix
-  gluPerspective(45.0f,(GLfloat)800/(GLfloat)400,0.1f,100.0f); // Calculate The Aspect Ratio Of The Window
+  //gluPerspective(45.0f,(GLfloat)800/(GLfloat)400,0.1f,100.0f); // Calculate The Aspect Ratio Of The Window
+  glOrtho(0.0f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.0f, 0.0f, 1.0f);
   glMatrixMode(GL_MODELVIEW);
 }
 
