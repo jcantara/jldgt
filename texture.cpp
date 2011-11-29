@@ -16,6 +16,8 @@ Textures can be loaded manually with the cTexture class, but if you use the cTex
 
 using namespace std;
 
+// create a gl texture based off of 2^n x 2^n sized bitmap (supports alpha channel)
+// loads the texture in sdl first, then puts it into opengl and keeps track of the pointer to the texture
 void cTexture::cTexture(string Filename) {
   SDL_Surface* surface = SDL_LoadBMP(Filename.c_str());
   if (!surface) {
@@ -53,7 +55,7 @@ void cTexture::cTexture(string Filename) {
   glGenTextures(1, &texture);
   glBindTexture(GL_TEXTURE_2D, texture);
   
-  // not sure if these are necessary yet
+  // not sure if these are necessary yet, defaults may be fine
   //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -74,10 +76,12 @@ void cTextureManager::cTextureManager() {
 
 }
 
+// calls destructor for each texture
 void cTextureManager::~cTextureManager() {
   Textures.clear();
 }
 
+// creates a new texture and saves it to a map so further calls to the same filename don't reload, just reference the same one
 cTexture* cTextureManager::Load(string Filename) {
   if (Textures.find(Filename) != Textures.end()) {
     Texture = Textures.find(Filename)->second;
