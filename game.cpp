@@ -31,6 +31,7 @@ cGame::cGame() {
   m_iCurrentFPS = 0;
 
   // opengl init:
+  glEnable(GL_TEXTURE_2D);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);   // This Will Clear The Background Color To Black
   glClearDepth(1.0);        // Enables Clearing Of The Depth Buffer
   glDepthFunc(GL_LESS);       // The Type Of Depth Test To Do
