@@ -55,6 +55,7 @@ class cGame
     int m_iFPSTickCounter;
     int m_iFPSCounter;
     int m_iCurrentFPS;
+    cTextureManager m_TextureManager;
 };
 
 #endif // GAME_H

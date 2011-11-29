@@ -9,6 +9,8 @@
 
 using namespace std;
 
+typedef map<string, cTexture> TextureMapType;
+
 class cTexture {
   public:
     cTexture(string filename);
@@ -24,7 +26,7 @@ class cTextureManager {
     ~cTextureManager();
     cTexture* Load(string filename); // pointer to our texture. Won't duplicate textures of same filename, will return pointer to the same one
   private:
-    static map<string, cTexture> Textures;
+    static TextureMapType Textures;
 };
 
 #endif // TEXTURE_H

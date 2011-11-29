@@ -75,7 +75,7 @@ void cTextureManager::cTextureManager() {
 }
 
 void cTextureManager::~cTextureManager() {
-
+  Textures.clear();
 }
 
 cTexture* cTextureManager::Load(string Filename) {
