@@ -26,6 +26,7 @@ void cTexture::cTexture(string Filename) {
   width = surface->w;
   if (((width & (width - 1)) != 0) || ((height & (height - 1)) != 0)) {
     cout << "Warning: texture dimensions are not power of 2: " << Filename << endl;
+    //exit(1); // may or may not be an issue, not sure if quitting needs to happen
   }
 
   GLenum texture_format;
