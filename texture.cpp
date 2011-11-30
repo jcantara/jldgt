@@ -18,7 +18,7 @@ using namespace std;
 
 // create a gl texture based off of 2^n x 2^n sized bitmap (supports alpha channel)
 // loads the texture in sdl first, then puts it into opengl and keeps track of the pointer to the texture
-void cTexture::cTexture(string Filename) {
+cTexture::cTexture(string Filename) {
   SDL_Surface* surface = SDL_LoadBMP(Filename.c_str());
   if (!surface) {
     cout << "Unable to load bitmap: " << SDL_GetError() << endl;
@@ -66,33 +66,34 @@ void cTexture::cTexture(string Filename) {
   SDL_FreeSurface(surface);
 }
 
-void cTexture::~cTexture() {
+cTexture::~cTexture() {
   glDeleteTextures(1, &texture);
 }
 
 //////////////// manager:
 
-void cTextureManager::cTextureManager() {
+cTextureManager::cTextureManager() {
 
 }
 
 // calls destructor for each texture
-void cTextureManager::~cTextureManager() {
+cTextureManager::~cTextureManager() {
   Textures.clear();
 }
 
 // creates a new texture and saves it to a map so further calls to the same filename don't reload, just reference the same one
 cTexture* cTextureManager::Load(string Filename) {
+  cTexture* texture;
   if (Textures.find(Filename) != Textures.end()) {
-    Texture = Textures.find(Filename)->second;
+    texture = &Textures.find(Filename)->second;
   } else {
-    Texture = cTexture(Filename);
-    if (!Texture)
+    Textures[Filename] = cTexture(Filename);
+    texture = &Textures[Filename];
+    if (!texture)
     { 
       cout << "Unable to load texture: " << Filename << endl;
       exit(1);
     }
-    Textures[Filename] = Texture;
   }
-  return &Texture;
+  return texture;
 }

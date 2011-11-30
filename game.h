@@ -8,6 +8,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+#include "texture.h"
+
 class cGame
 {
   public:

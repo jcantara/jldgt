@@ -5,11 +5,9 @@
 #include <GL/glu.h>
 
 #include <string>
-#include "game.h"
+#include <map>
 
 using namespace std;
-
-typedef map<string, cTexture> TextureMapType;
 
 class cTexture {
   public:
@@ -19,6 +17,8 @@ class cTexture {
     int width;
     GLuint texture;
 };
+
+typedef map<string, cTexture> TextureMapType;
 
 class cTextureManager {
   public:
