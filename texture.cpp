@@ -16,6 +16,10 @@ Textures can be loaded manually with the cTexture class, but if you use the cTex
 
 using namespace std;
 
+cTexture::cTexture() {
+  
+}
+
 // create a gl texture based off of 2^n x 2^n sized bitmap (supports alpha channel)
 // loads the texture in sdl first, then puts it into opengl and keeps track of the pointer to the texture
 cTexture::cTexture(string Filename) {
@@ -87,7 +91,8 @@ cTexture* cTextureManager::Load(string Filename) {
   if (Textures.find(Filename) != Textures.end()) {
     texture = &Textures.find(Filename)->second;
   } else {
-    Textures[Filename] = new cTexture(Filename);
+    cTexture* tex = new cTexture(Filename);
+    Textures[Filename] = *tex;
     texture = &Textures[Filename];
     if (!texture)
     { 
