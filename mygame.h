@@ -27,6 +27,7 @@ class cMyGame: public cGame {
       const int& iRelY);
   protected:
   private:
+    cTexture* tex;
 };
 
 #endif // MY_GAME_H
