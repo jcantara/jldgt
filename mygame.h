@@ -28,6 +28,7 @@ class cMyGame: public cGame {
   protected:
   private:
     cTexture* tex;
+    cTexture* tex2;
 };
 
 #endif // MY_GAME_H

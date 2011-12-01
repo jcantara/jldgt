@@ -3,6 +3,7 @@
 void cMyGame::Init() {
   // mygame constructor
   tex = new cTexture("test.bmp");
+  tex2 = new cTexture("test2.bmp");
 }
 
 void cMyGame::End() {
@@ -43,6 +44,26 @@ void cMyGame::Draw(float interpolation) {
     glTexCoord2i( 0, 0 );
     glVertex3f( 100.f, 100.f, 0.0f );
  
+    //Bottom-right vertex (corner)
+    glTexCoord2i( 1, 0 );
+    glVertex3f( 228.f, 100.f, 0.f );
+ 
+    //Top-right vertex (corner)
+    glTexCoord2i( 1, 1 );
+    glVertex3f( 228.f, 228.f, 0.f );
+ 
+    //Top-left vertex (corner)
+    glTexCoord2i( 0, 1 );
+    glVertex3f( 100.f, 228.f, 0.f );
+  glEnd();
+
+  glBindTexture( GL_TEXTURE_2D, tex2->texture );
+
+  glBegin( GL_QUADS );
+    //Bottom-left vertex (corner)
+    glTexCoord2i( 0, 0 );
+    glVertex3f( 100.f, 100.f, 0.0f );
+
     //Bottom-right vertex (corner)
     glTexCoord2i( 1, 0 );
     glVertex3f( 228.f, 100.f, 0.f );
