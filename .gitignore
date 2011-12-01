@@ -1,2 +1,6 @@
 *.swp
 game_bin
+*.cbp
+*.depend
+bin/
+obj/
