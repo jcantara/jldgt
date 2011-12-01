@@ -35,7 +35,9 @@ cGame::cGame() {
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);   // This Will Clear The Background Color To Black
   glClearDepth(1.0);        // Enables Clearing Of The Depth Buffer
   glDepthFunc(GL_LESS);       // The Type Of Depth Test To Do
-  glEnable(GL_DEPTH_TEST);      // Enables Depth Testing
+  glDisable(GL_DEPTH_TEST); // disable depth test to enable blend below
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
   glShadeModel(GL_SMOOTH);      // Enables Smooth Color Shading
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();       // Reset The Projection Matrix
