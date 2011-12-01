@@ -37,7 +37,7 @@ cGame::cGame() {
   glDepthFunc(GL_LESS);       // The Type Of Depth Test To Do
   glDisable(GL_DEPTH_TEST); // disable depth test to enable blend below
   glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glShadeModel(GL_SMOOTH);      // Enables Smooth Color Shading
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();       // Reset The Projection Matrix

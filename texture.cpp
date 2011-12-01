@@ -56,6 +56,7 @@ cTexture::cTexture(string Filename) {
     exit(1);
   }
 
+  texture = 0; // initialize
   glGenTextures(1, &texture);
   glBindTexture(GL_TEXTURE_2D, texture);
   
