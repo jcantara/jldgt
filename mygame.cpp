@@ -37,9 +37,9 @@ void cMyGame::Physics() {
 void cMyGame::Draw(float interpolation) {
   // this is called after physics happens if there's enough time
 
-  for (int i=0; i<100; i++) {
   glBindTexture( GL_TEXTURE_2D, tex->texture );
 
+  for (int i=0; i<100; i++) {
   glBegin( GL_QUADS );
     //Bottom-left vertex (corner)
     glTexCoord2i( 0, 0 );
@@ -57,9 +57,11 @@ void cMyGame::Draw(float interpolation) {
     glTexCoord2i( 0, 1 );
     glVertex3f( 100.f, 228.f, 0.f );
   glEnd();
+  }
 
   glBindTexture( GL_TEXTURE_2D, tex2->texture );
 
+  for(int i=0;i<100;i++) {
   glBegin( GL_QUADS );
     //Bottom-left vertex (corner)
     glTexCoord2i( 0, 0 );
