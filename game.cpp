@@ -105,7 +105,7 @@ void cGame::Physicsloop() {
     loops++;
     m_Eps.event();
     Physics(); // call this in child class
-    cout << "P: " << m_Eps.persecond() << endl;
+    //cout << "P: " << m_Eps.persecond() << endl;
   }
   if (loops == MAX_FRAMESKIP) {
     // computer is too slow to run game
@@ -137,6 +137,7 @@ void cGame::Drawingloop() {
   //SDL_GL_SwapBuffers();
   //glFinish();
   //cout << "  SDL_GL_SwapBuffers Done: " << SDL_GetTicks() << endl;
+  glFlush();
 }
 
 int cGame::Go() {
