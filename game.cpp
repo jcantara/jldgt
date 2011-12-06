@@ -18,7 +18,8 @@ cGame::cGame() : m_Fps(50), m_Eps(50), m_TextureManager() {
   atexit(SDL_Quit);
 
   // create a new window
-  m_pScreen = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 16, SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_OPENGL);
+  const SDL_VideoInfo* info = SDL_GetVideoInfo();
+  m_pScreen = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, info->vfmt->BitsPerPixel, SDL_OPENGL);
   if ( !m_pScreen ) {
     cout << "Unable to set video: " << SDL_GetError() << endl;
     exit(1);
@@ -32,7 +33,7 @@ cGame::cGame() : m_Fps(50), m_Eps(50), m_TextureManager() {
   // opengl init:
   glEnable(GL_TEXTURE_2D);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);   // This Will Clear The Background Color To Black
-  glClearDepth(1.0);        // Enables Clearing Of The Depth Buffer
+  //glClearDepth(1.0);        // Enables Clearing Of The Depth Buffer
   glDepthFunc(GL_LESS);       // The Type Of Depth Test To Do
   glDisable(GL_DEPTH_TEST); // disable depth test to enable blend below
   glEnable(GL_BLEND);
@@ -42,6 +43,7 @@ cGame::cGame() : m_Fps(50), m_Eps(50), m_TextureManager() {
   glLoadIdentity();       // Reset The Projection Matrix
   glOrtho(0.0f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.0f, 0.0f, 1.0f);
   glMatrixMode(GL_MODELVIEW);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 cGame::~cGame() {
@@ -102,7 +104,7 @@ void cGame::Physicsloop() {
     loops++;
     m_Eps.event();
     Physics(); // call this in child class
-    cout << "P: " << m_Eps.persecond() << endl;
+    //cout << "P: " << m_Eps.persecond() << endl;
   }
   if (loops == MAX_FRAMESKIP) {
     // computer is too slow to run game
@@ -115,15 +117,24 @@ void cGame::Drawingloop() {
   m_Fps.event();
 
   //SDL_FillRect(m_pScreen, 0, SDL_MapRGB(m_pScreen->format, 0, 0, 0)); // black background
+  cout << "  glClear: " << SDL_GetTicks() << endl;
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);   // Clear The Screen And The Depth Buffer
+  cout << "  glClear Done: "  << SDL_GetTicks() << endl;
+  cout << "  glLoadIdentity: " << SDL_GetTicks() << endl;
   glLoadIdentity();
+  cout << "  glLoadIdentity Done: " << SDL_GetTicks() << endl;
 
   float interpolation = float( SDL_GetTicks() + SKIP_TICKS - m_iNextGameTick ) / float( SKIP_TICKS );
+  cout << "  myGame.Draw: " << SDL_GetTicks() << endl;
   Draw(interpolation); // call this in child class
-  cout << "D: " << m_Fps.persecond() << endl;
+  cout << "  myGame.Draw Done: " << SDL_GetTicks() << endl;
+  //cout << "D: " << m_Fps.persecond() << endl;
 
   //SDL_Flip(m_pScreen);
-  SDL_GL_SwapBuffers();
+  cout << "  SDL_GL_SwapBuffers: " << SDL_GetTicks() << endl;
+  //SDL_GL_SwapBuffers();
+  glFinish();
+  cout << "  SDL_GL_SwapBuffers Done: " << SDL_GetTicks() << endl;
 }
 
 int cGame::Go() {
@@ -132,8 +143,14 @@ int cGame::Go() {
   m_iNextGameTick = SDL_GetTicks();
   m_bGameIsRunning = true;
   while( m_bGameIsRunning ) {
+    cout << "Start Game Loop: " << endl;
+    cout << "Game Physics Loop: " << SDL_GetTicks() << endl;
     Physicsloop();
+    cout << "Game Physics Loop Done: " << SDL_GetTicks() << endl;
+    cout << "Game Drawing Loop: " << SDL_GetTicks() << endl;
     Drawingloop();
+    cout << "Game Drawing Loop Done: " << SDL_GetTicks() << endl << endl;
+    cout << "ERRORS: " << glGetError() << endl;
   }
   End(); // child class cleanup
   return 0;
