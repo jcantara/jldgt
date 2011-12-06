@@ -5,7 +5,7 @@
 #include <SDL.h>
 #endif
 
-cEps::cEps(int ct) : cur(0), m_iArray(ct,0) {};
+cEps::cEps(int ct) : m_iArray(ct,0), cur(0) {};
 
 cEps::~cEps() {};
 
