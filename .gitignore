@@ -4,3 +4,4 @@ game_bin
 *.depend
 bin/
 obj/
+*.layout

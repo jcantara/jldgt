@@ -3,7 +3,7 @@
 
 using namespace std;
 
-cGame::cGame() { 
+cGame::cGame() : m_Fps(50), m_Eps(50), m_TextureManager() {
   // initialize SDL video
   if ( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_TIMER ) < 0 ) {
     cout << "Unable to init SDL: " << SDL_GetError() << endl;
@@ -24,11 +24,10 @@ cGame::cGame() {
     exit(1);
   }
 
-  m_iElapsedTicks = 0;
-  m_iLastTick = 0;
-  m_iFPSTickCounter = 0;
-  m_iFPSCounter = 0;
-  m_iCurrentFPS = 0;
+  //m_Fps = new cEps(50);
+  //m_Eps = new cEps(50);
+
+  //m_TextureManager = new cTextureManager();
 
   // opengl init:
   glEnable(GL_TEXTURE_2D);
@@ -45,7 +44,7 @@ cGame::cGame() {
   glMatrixMode(GL_MODELVIEW);
 }
 
-cGame::~cGame() { 
+cGame::~cGame() {
   //destructor
   SDL_Quit();
 }
@@ -55,7 +54,7 @@ void cGame::Physicsloop() {
   while( SDL_GetTicks() >= m_iNextGameTick && loops < MAX_FRAMESKIP) {
     SDL_Event event;
     while (SDL_PollEvent(&event))
-    { 
+    {
       // check for messages
       switch (event.type)
       {
@@ -101,7 +100,9 @@ void cGame::Physicsloop() {
 
     m_iNextGameTick += SKIP_TICKS;
     loops++;
+    m_Eps.event();
     Physics(); // call this in child class
+    cout << "P: " << m_Eps.persecond() << endl;
   }
   if (loops == MAX_FRAMESKIP) {
     // computer is too slow to run game
@@ -111,17 +112,7 @@ void cGame::Physicsloop() {
 }
 
 void cGame::Drawingloop() {
-  // fps calculation
-  m_iElapsedTicks = SDL_GetTicks() - m_iLastTick;
-  m_iFPSTickCounter += m_iElapsedTicks;
-  ++m_iFPSCounter;
-  if (m_iFPSTickCounter >= 1000) {
-    m_iCurrentFPS = m_iFPSCounter;
-    m_iFPSCounter = 0;
-    m_iFPSTickCounter = 0;
-    cout << m_iCurrentFPS << endl;
-  }
-  m_iLastTick = SDL_GetTicks();
+  m_Fps.event();
 
   //SDL_FillRect(m_pScreen, 0, SDL_MapRGB(m_pScreen->format, 0, 0, 0)); // black background
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);   // Clear The Screen And The Depth Buffer
@@ -129,12 +120,13 @@ void cGame::Drawingloop() {
 
   float interpolation = float( SDL_GetTicks() + SKIP_TICKS - m_iNextGameTick ) / float( SKIP_TICKS );
   Draw(interpolation); // call this in child class
+  cout << "D: " << m_Fps.persecond() << endl;
 
   //SDL_Flip(m_pScreen);
   SDL_GL_SwapBuffers();
 }
 
-int cGame::Go() { 
+int cGame::Go() {
   Init(); // child class setup
 
   m_iNextGameTick = SDL_GetTicks();
