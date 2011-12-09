@@ -5,28 +5,23 @@
 #include <SDL.h>
 #endif
 
-cEps::cEps(int count) {
-  ct = count;
-  m_iArray = new *int[ct]
-}
+cEps::cEps(int ct) : m_iArray(ct,0), cur(0) {};
 
-cEps::~cEps {
-  delete [] m_iArray;
-  m_iArray = NULL;
-}
+cEps::~cEps() {};
 
-cEps::event() {
+void cEps::event() {
+  cur = (cur + 1) % m_iArray.size();
   m_iArray[cur] = SDL_GetTicks();
-  cur = (cur + 1) % ct;
-}
+};
 
 float cEps::persecond() {
   if (m_iArray[cur] == 0) {
-    return 0.0
+    return 0.0;
   }
-  int last = (cur + 1) % ct;
+  int last = (cur + 1) % m_iArray.size();
   if (m_iArray[last] == 0) {
-    return 0.0
+    return 0.0;
   }
-  float eps = (float)(m_iArray[cur] - m_iArray[last]) / (float)ct;
-}
+  float eps = (float)m_iArray.size() / ((float)(m_iArray[cur] - m_iArray[last]) / 1000);
+  return eps;
+};

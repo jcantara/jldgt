@@ -2,6 +2,6 @@
 
 int main ( int argc, char** argv )
 {
-  cMyGame *game = new cMyGame;
-  return game->Go();
+  cMyGame game;
+  return game.Go();
 }

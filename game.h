@@ -9,6 +9,7 @@
 #include <GL/glu.h>
 
 #include "texture.h"
+#include "eps.h"
 
 class cGame
 {
@@ -16,13 +17,13 @@ class cGame
     cGame();
     ~cGame();
     int Go();
-    static const int TICKS_PER_SECOND = 60; // physics events per second
+    static const int TICKS_PER_SECOND = 100; // physics events per second
     static const int SKIP_TICKS = 1000 / TICKS_PER_SECOND; // calculate inverse of physics tick rate
     static const int MAX_FRAMESKIP = 5; // maximum allowed physics ticks without drawing a frame
     static const int WINDOW_WIDTH = 800;
     static const int WINDOW_HEIGHT = 400;
     // interface functions:
-    virtual void Draw(float interpolation) =0;
+    virtual void Draw(const float interpolation) =0;
     virtual void Physics() =0;
     virtual void Init() =0;
     virtual void End() =0;
@@ -53,11 +54,10 @@ class cGame
     Uint32 m_iNextGameTick;
 
     // fps related:
-    Uint32 m_iElapsedTicks;
-    Uint32 m_iLastTick;
-    int m_iFPSTickCounter;
-    int m_iFPSCounter;
-    int m_iCurrentFPS;
+    cEps m_Fps;
+    cEps m_Eps;
+
+    // texture manager:
     cTextureManager m_TextureManager;
 };
 
