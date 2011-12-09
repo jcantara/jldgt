@@ -76,11 +76,22 @@ int main ( int argc, char** argv ) {
 
     // could draw stuff here, but just draw nothing, this "should" be fast
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glBegin(GL_QUADS);
+    for(int i=0; i<10000; i++) {
+      glColor4f( 1.0, 1.0, 1.0, 1.0 );
+      glVertex3f( 0, 0, 0 );
+      glVertex3f( 20, 0, 0 );
+      glVertex3f( 20, 20, 0 );
+      glVertex3f( 0, 20, 0 );
+    }
+    glEnd();
+
     //SDL_GL_SwapBuffers();
     glFlush();
 
     // output some debug info
-    if (loops % 1000 == 0) {
+    if (loops % 100 == 0) {
       cout << loops << "-" << SDL_GetTicks() << endl;
     }
     loops++;
