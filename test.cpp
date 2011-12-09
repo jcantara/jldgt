@@ -9,6 +9,8 @@
 #include <GL/glu.h>
 #include <iostream>
 
+//g++ test.cpp -o test_bin `sdl-config --cflags --libs` -lGL -lGLU
+
 using namespace std;
 
 int main ( int argc, char** argv ) {
@@ -31,7 +33,7 @@ int main ( int argc, char** argv ) {
   SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 0 );
   // create a new window
   //const SDL_VideoInfo* info = SDL_GetVideoInfo();
-  SDL_Surface* m_pScreen = SDL_SetVideoMode(1024, 600, 0, SDL_OPENGL | SDL_FULLSCREEN);
+  SDL_Surface* m_pScreen = SDL_SetVideoMode(320, 200, 0, SDL_OPENGL);
   if ( !m_pScreen ) {
     cout << "Unable to set video: " << SDL_GetError() << endl;
     exit(1);
@@ -43,17 +45,18 @@ int main ( int argc, char** argv ) {
   glClearDepth(1.0);        // Enables Clearing Of The Depth Buffer
   glDepthFunc(GL_LESS);       // The Type Of Depth Test To Do
   glDisable(GL_DEPTH_TEST); // disable depth test to enable blend below
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  //glEnable(GL_BLEND);
+  //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glShadeModel(GL_SMOOTH);      // Enables Smooth Color Shading
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();       // Reset The Projection Matrix
-  glOrtho(0.0f, 1024, 600, 0.0f, 0.0f, 1.0f);
+  glOrtho(0.0f, 320, 200, 0.0f, 0.0f, 1.0f);
   glMatrixMode(GL_MODELVIEW);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   bool run = true;
   int loops = 0;
+  int last_tick = 0;
 
   SDL_Event event;
   while (run) {
@@ -88,11 +91,12 @@ int main ( int argc, char** argv ) {
     glEnd();
 
     //SDL_GL_SwapBuffers();
-    glFlush();
+    glFinish();
 
     // output some debug info
     if (loops % 100 == 0) {
-      cout << loops << "-" << SDL_GetTicks() << endl;
+      cout << (100.0 / (SDL_GetTicks() - last_tick))*1000 << endl;
+      last_tick = SDL_GetTicks();
     }
     loops++;
   }
