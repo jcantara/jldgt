@@ -28,7 +28,7 @@ int main ( int argc, char** argv ) {
   SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 5 );
   SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
   SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
-  SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
+  SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 0 );
   // create a new window
   //const SDL_VideoInfo* info = SDL_GetVideoInfo();
   SDL_Surface* m_pScreen = SDL_SetVideoMode(1024, 600, 0, SDL_OPENGL | SDL_FULLSCREEN);
@@ -55,9 +55,9 @@ int main ( int argc, char** argv ) {
   bool run = true;
   int loops = 0;
 
+  SDL_Event event;
   while (run) {
     // check for quit events to exit the loop
-    SDL_Event event;
     while (SDL_PollEvent(&event))
     {
       // check for messages
@@ -76,10 +76,13 @@ int main ( int argc, char** argv ) {
 
     // could draw stuff here, but just draw nothing, this "should" be fast
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    SDL_GL_SwapBuffers();
+    //SDL_GL_SwapBuffers();
+    glFlush();
 
     // output some debug info
-    cout << loops << "-" << SDL_GetTicks() << endl;
+    if (loops % 1000 == 0) {
+      cout << loops << "-" << SDL_GetTicks() << endl;
+    }
     loops++;
   }
 
