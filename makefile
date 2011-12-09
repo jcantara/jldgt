@@ -11,14 +11,18 @@ game_bin: main.o game.o mygame.o texture.o eps.o
 main.o: main.cpp
 	$(CC) $(CFLAGS) $(LDFLAGS) main.cpp
 
-game.o: game.cpp
+game.o: game.cpp game.h
 	$(CC) $(CFLAGS) $(LDFLAGS) game.cpp
 
-mygame.o: mygame.cpp
+mygame.o: mygame.cpp mygame.h
 	$(CC) $(CFLAGS) $(LDFLAGS) mygame.cpp
 
-texture.o: texture.cpp
+texture.o: texture.cpp texture.h
 	$(CC) $(CFLAGS) $(LDFLAGS) texture.cpp
 
-eps.o: eps.cpp
+eps.o: eps.cpp eps.h
 	$(CC) $(CFLAGS) $(LDFLAGS) eps.cpp
+
+clean:
+	rm *.o
+	rm game_bin
