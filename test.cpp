@@ -21,19 +21,22 @@ int main ( int argc, char** argv ) {
     exit(1);
   }
 
+  int width = 320;
+  int height = 200;
+
   // set up our exit cleanup
   atexit(SDL_Quit);
 
   // configure sdl gl settings
-  SDL_GL_SetAttribute( SDL_GL_SWAP_CONTROL, 0);
+  SDL_GL_SetAttribute( SDL_GL_SWAP_CONTROL, 1);
   SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
   SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 5 );
   SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
-  SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
-  SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 0 );
+  SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 1 );
+  SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
   // create a new window
   //const SDL_VideoInfo* info = SDL_GetVideoInfo();
-  SDL_Surface* m_pScreen = SDL_SetVideoMode(320, 200, 0, SDL_OPENGL);
+  SDL_Surface* m_pScreen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL);
   if ( !m_pScreen ) {
     cout << "Unable to set video: " << SDL_GetError() << endl;
     exit(1);
@@ -50,7 +53,7 @@ int main ( int argc, char** argv ) {
   //glShadeModel(GL_SMOOTH);      // Enables Smooth Color Shading
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();       // Reset The Projection Matrix
-  glOrtho(0.0f, 320, 200, 0.0f, 0.0f, 1.0f);
+  glOrtho(0.0f, width, height, 0.0f, 0.0f, 1.0f);
   glMatrixMode(GL_MODELVIEW);
   glClear(GL_COLOR_BUFFER_BIT);
 
@@ -60,6 +63,19 @@ int main ( int argc, char** argv ) {
 
   SDL_Event event;
   while (run) {
+    // could draw stuff here, but just draw nothing, this "should" be fast
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glBegin(GL_QUADS);
+    for(int i=0; i<100; i++) {
+      glColor4f( 1.0, 1.0, 1.0, 1.0 );
+      glVertex3f( 0, 0, 0 );
+      glVertex3f( 200, 0, 0 );
+      glVertex3f( 200, 200, 0 );
+      glVertex3f( 0, 200, 0 );
+    }
+    glEnd();
+
     // check for quit events to exit the loop
     while (SDL_PollEvent(&event))
     {
@@ -77,21 +93,8 @@ int main ( int argc, char** argv ) {
       }
     }
 
-    // could draw stuff here, but just draw nothing, this "should" be fast
-    glClear(GL_COLOR_BUFFER_BIT);
 
-    glBegin(GL_QUADS);
-    for(int i=0; i<10000; i++) {
-      glColor4f( 1.0, 1.0, 1.0, 1.0 );
-      glVertex3f( 0, 0, 0 );
-      glVertex3f( 20, 0, 0 );
-      glVertex3f( 20, 20, 0 );
-      glVertex3f( 0, 20, 0 );
-    }
-    glEnd();
-
-    //SDL_GL_SwapBuffers();
-    glFinish();
+    SDL_GL_SwapBuffers();
 
     // output some debug info
     if (loops % 100 == 0) {
