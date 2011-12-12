@@ -103,7 +103,7 @@ int cGame::Physicsloop() {
       m_Eps.event();
       Physics(); // call this in child class
       SDL_mutexV(m_pLock);
-      //cout << "P: " << m_Eps.persecond() << endl;
+      cout << "P: " << m_Eps.persecond() << endl;
     }
     if (loops == MAX_FRAMESKIP) {
       // computer is too slow to run game
@@ -133,7 +133,7 @@ int cGame::Drawingloop() {
     Draw(interpolation); // call this in child class
     SDL_mutexV(m_pLock);
     //cout << "  myGame.Draw Done: " << SDL_GetTicks() << endl;
-    //cout << "D: " << m_Fps.persecond() << endl;
+    cout << "D: " << m_Fps.persecond() << endl;
 
     //SDL_Flip(m_pScreen);
     //cout << "  SDL_GL_SwapBuffers: " << SDL_GetTicks() << endl;
