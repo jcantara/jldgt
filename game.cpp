@@ -1,5 +1,7 @@
 #include "game.h"
 #include <iostream>
+#include "SDL_thread.h"
+#include "SDL_mutex.h"
 
 using namespace std;
 
@@ -45,7 +47,8 @@ cGame::~cGame() {
   SDL_Quit();
 }
 
-void cGame::Physicsloop() {
+void cGame::Physicsloop(void *data) {
+  SDL_mutex *lock = (SDL_mutex *)data;
   while( m_bGameIsRunning ) {
     int loops = 0;
     while( SDL_GetTicks() >= m_iNextGameTick && loops < MAX_FRAMESKIP) {
@@ -95,10 +98,12 @@ void cGame::Physicsloop() {
         }
       }
 
+      SDL_mutexP(lock);
       m_iNextGameTick += SKIP_TICKS;
       loops++;
       m_Eps.event();
       Physics(); // call this in child class
+      SDL_mutexV(lock);
       //cout << "P: " << m_Eps.persecond() << endl;
     }
     if (loops == MAX_FRAMESKIP) {
@@ -110,7 +115,8 @@ void cGame::Physicsloop() {
   }
 }
 
-void cGame::Drawingloop() {
+void cGame::Drawingloop(void *data) {
+  SDL_mutex *lock = (SDL_mutex *)data;
   while( m_bGameIsRunning ) {
     m_Fps.event();
 
@@ -122,9 +128,11 @@ void cGame::Drawingloop() {
     glLoadIdentity();
     //cout << "  glLoadIdentity Done: " << SDL_GetTicks() << endl;
 
+    SDL_mutexP(lock);
     float interpolation = float( SDL_GetTicks() + SKIP_TICKS - m_iNextGameTick ) / float( SKIP_TICKS );
     //cout << "  myGame.Draw: " << SDL_GetTicks() << endl;
     Draw(interpolation); // call this in child class
+    SDL_mutexV(lock);
     //cout << "  myGame.Draw Done: " << SDL_GetTicks() << endl;
     //cout << "D: " << m_Fps.persecond() << endl;
 
@@ -141,6 +149,9 @@ void cGame::Drawingloop() {
 int cGame::Go() {
   SDL_Thread *physics_thread;
   SDL_Thread *drawing_thread;
+  SDL_mutex  *lock;
+
+  lock = SDL_CreateMutex();
 
   Init(); // child class setup
 
@@ -148,10 +159,10 @@ int cGame::Go() {
   //while( m_bGameIsRunning ) {
     //cout << "Start Game Loop: " << endl;
     //cout << "Game Physics Loop: " << SDL_GetTicks() << endl;
-  physics_thread = SDL_CreateThread(Physicsloop, NULL);
+  physics_thread = SDL_CreateThread(Physicsloop, lock);
     //cout << "Game Physics Loop Done: " << SDL_GetTicks() << endl;
     //cout << "Game Drawing Loop: " << SDL_GetTicks() << endl;
-  drawing_thread = SDL_CreateThread(Drawingloop, NULL);
+  drawing_thread = SDL_CreateThread(Drawingloop, lock);
     //cout << "Game Drawing Loop Done: " << SDL_GetTicks() << endl << endl;
     //cout << "ERRORS: " << glGetError() << endl;
   //}
