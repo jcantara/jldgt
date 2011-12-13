@@ -53,10 +53,11 @@ cGame::~cGame() {
 }
 
 int cGame::Physicsloop() {
+  SDL_Event event;
   while( m_bGameIsRunning ) {
     int loops = 0;
     while( SDL_GetTicks() >= m_iNextGameTick && loops < MAX_FRAMESKIP) {
-      SDL_Event event;
+      SDL_mutexP(m_pLock);
       while (SDL_PollEvent(&event))
       {
         // check for messages
@@ -102,7 +103,6 @@ int cGame::Physicsloop() {
         }
       }
 
-      SDL_mutexP(m_pLock);
       m_iNextGameTick += SKIP_TICKS;
       loops++;
       m_Eps.event();
