@@ -55,9 +55,6 @@ class cGame
     static int StaticPhysicsloop(void* pParam) {
       return ((cGame*)pParam)->Physicsloop();
     }
-    static int StaticDrawingloop(void* pParam) {
-      return ((cGame*)pParam)->Drawingloop();
-    }
   private:
     Uint32 m_iNextGameTick;
 
