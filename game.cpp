@@ -17,15 +17,15 @@ cGame::cGame() : m_Fps(50), m_Eps(50), m_TextureManager() {
   // make sure SDL cleans up before exit
   atexit(SDL_Quit);
 
-  SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
+  //SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
   SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
   SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 5 );
   SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
   SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
-  SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
+  //SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
   // create a new window
   //const SDL_VideoInfo* info = SDL_GetVideoInfo();
-  m_pScreen = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 0, SDL_OPENGL | SDL_FULLSCREEN);
+  m_pScreen = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 0, SDL_OPENGL);
   if ( !m_pScreen ) {
     cout << "Unable to set video: " << SDL_GetError() << endl;
     exit(1);

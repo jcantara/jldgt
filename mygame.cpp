@@ -39,7 +39,7 @@ void cMyGame::Draw(float interpolation) {
 
   glBindTexture( GL_TEXTURE_2D, tex->texture );
 
-  for (int i=0; i<100; i++) {
+  for (int i=0; i<1; i++) {
   glBegin( GL_QUADS );
     //Bottom-left vertex (corner)
     glTexCoord2i( 0, 0 );
@@ -61,7 +61,7 @@ void cMyGame::Draw(float interpolation) {
 
   glBindTexture( GL_TEXTURE_2D, tex2->texture );
 
-  for(int i=0;i<100;i++) {
+  for(int i=0;i<1;i++) {
   glBegin( GL_QUADS );
     //Bottom-left vertex (corner)
     glTexCoord2i( 0, 0 );
