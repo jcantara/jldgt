@@ -17,11 +17,11 @@ class cGame
     cGame();
     ~cGame();
     int Go();
-    static const int TICKS_PER_SECOND = 100; // physics events per second
+    static const int TICKS_PER_SECOND = 50; // physics events per second
     static const int SKIP_TICKS = 1000 / TICKS_PER_SECOND; // calculate inverse of physics tick rate
     static const int MAX_FRAMESKIP = 5; // maximum allowed physics ticks without drawing a frame
-    static const int WINDOW_WIDTH = 800;
-    static const int WINDOW_HEIGHT = 400;
+    static const int WINDOW_WIDTH = 1024;
+    static const int WINDOW_HEIGHT = 600;
     // interface functions:
     virtual void Draw(const float interpolation) =0;
     virtual void Physics() =0;
