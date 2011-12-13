@@ -17,11 +17,11 @@ class cGame
     cGame();
     ~cGame();
     int Go();
-    static const int TICKS_PER_SECOND = 100; // physics events per second
+    static const int TICKS_PER_SECOND = 50; // physics events per second
     static const int SKIP_TICKS = 1000 / TICKS_PER_SECOND; // calculate inverse of physics tick rate
     static const int MAX_FRAMESKIP = 5; // maximum allowed physics ticks without drawing a frame
-    static const int WINDOW_WIDTH = 800;
-    static const int WINDOW_HEIGHT = 400;
+    static const int WINDOW_WIDTH = 1024;
+    static const int WINDOW_HEIGHT = 600;
     // interface functions:
     virtual void Draw(const float interpolation) =0;
     virtual void Physics() =0;
@@ -44,12 +44,20 @@ class cGame
       const int& iRelX,
       const int& iRelY) =0;
   protected:
-    void Physicsloop();
-    void Drawingloop();
+    int Physicsloop();
+    int Drawingloop();
 
     bool m_bGameIsRunning;
     SDL_Surface* m_pScreen;
+    SDL_mutex* m_pLock;
     bool m_bKeysHeld[SDLK_LAST];
+
+    static int StaticPhysicsloop(void* pParam) {
+      return ((cGame*)pParam)->Physicsloop();
+    }
+    static int StaticDrawingloop(void* pParam) {
+      return ((cGame*)pParam)->Drawingloop();
+    }
   private:
     Uint32 m_iNextGameTick;
 
