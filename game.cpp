@@ -17,7 +17,7 @@ cGame::cGame() : m_Fps(50), m_Eps(50), m_TextureManager() {
   // make sure SDL cleans up before exit
   atexit(SDL_Quit);
 
-  SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 0);
+  SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
   SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
   SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 5 );
   SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
