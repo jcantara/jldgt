@@ -44,12 +44,20 @@ class cGame
       const int& iRelX,
       const int& iRelY) =0;
   protected:
-    void Physicsloop();
-    void Drawingloop();
+    int Physicsloop();
+    int Drawingloop();
 
     bool m_bGameIsRunning;
     SDL_Surface* m_pScreen;
+    SDL_mutex* m_pLock;
     bool m_bKeysHeld[SDLK_LAST];
+
+    static int StaticPhysicsloop(void* pParam) {
+      return ((cGame*)pParam)->Physicsloop();
+    }
+    static int StaticDrawingloop(void* pParam) {
+      return ((cGame*)pParam)->Drawingloop();
+    }
   private:
     Uint32 m_iNextGameTick;
 

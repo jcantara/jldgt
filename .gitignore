@@ -1,5 +1,6 @@
 *.swp
 game_bin
+test_bin
 *.cbp
 *.depend
 bin/
