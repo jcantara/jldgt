@@ -154,7 +154,6 @@ int cGame::Drawingloop() {
 int cGame::Go() {
   cout << "Starting Init" << endl;
   SDL_Thread *physics_thread;
-  SDL_Thread *drawing_thread;
 
   m_pLock = SDL_CreateMutex();
   Init(); // child class setup
