@@ -161,20 +161,8 @@ int cGame::Go() {
   cout << "Init Done" << endl;
 
   m_iNextGameTick = SDL_GetTicks();
-  //while( m_bGameIsRunning ) {
-    //cout << "Start Game Loop: " << endl;
-    //cout << "Next Game Tick: " << m_iNextGameTick << endl;
-    //cout << "Game Physics Loop: " << SDL_GetTicks() << endl;
   physics_thread = SDL_CreateThread(StaticPhysicsloop, this);
-    //cout << "Game Physics Loop Done: " << SDL_GetTicks() << endl;
-    //cout << "Game Drawing Loop: " << SDL_GetTicks() << endl;
-  drawing_thread = SDL_CreateThread(StaticDrawingloop, this);
-    //cout << "Game Drawing Loop Done: " << SDL_GetTicks() << endl << endl;
-    //cout << "ERRORS: " << glGetError() << endl;
-  //}
-
-  SDL_WaitThread(physics_thread, NULL);
-  SDL_WaitThread(drawing_thread, NULL);
+  Drawingloop(); // this will run until game ends
 
   End(); // child class cleanup
   return 0;
