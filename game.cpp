@@ -25,7 +25,7 @@ cGame::cGame() : m_Fps(50), m_Eps(50), m_TextureManager() {
   SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
   // create a new window
   //const SDL_VideoInfo* info = SDL_GetVideoInfo();
-  m_pScreen = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 0, SDL_OPENGL | SDL_FULLSCREEN);
+  m_pScreen = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 0, SDL_OPENGL);
   if ( !m_pScreen ) {
     cout << "Unable to set video: " << SDL_GetError() << endl;
     exit(1);
@@ -53,10 +53,11 @@ cGame::~cGame() {
 }
 
 int cGame::Physicsloop() {
+  SDL_Event event;
   while( m_bGameIsRunning ) {
     int loops = 0;
     while( SDL_GetTicks() >= m_iNextGameTick && loops < MAX_FRAMESKIP) {
-      SDL_Event event;
+      SDL_mutexP(m_pLock);
       while (SDL_PollEvent(&event))
       {
         // check for messages
@@ -102,7 +103,6 @@ int cGame::Physicsloop() {
         }
       }
 
-      SDL_mutexP(m_pLock);
       m_iNextGameTick += SKIP_TICKS;
       loops++;
       m_Eps.event();
