@@ -24,7 +24,6 @@ cGame::cGame() : m_Fps(50), m_Eps(50), m_TextureManager() {
   SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
   //SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
   // create a new window
-  //const SDL_VideoInfo* info = SDL_GetVideoInfo();
   m_pScreen = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 0, SDL_OPENGL);
   if ( !m_pScreen ) {
     cout << "Unable to set video: " << SDL_GetError() << endl;
@@ -128,29 +127,15 @@ int cGame::Drawingloop() {
   while(m_bGameIsRunning) {
     m_Fps.event();
 
-    //SDL_FillRect(m_pScreen, 0, SDL_MapRGB(m_pScreen->format, 0, 0, 0)); // black background
-    //cout << "  glClear: " << SDL_GetTicks() << endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);   // Clear The Screen And The Depth Buffer
-    //cout << "  glClear Done: "  << SDL_GetTicks() << endl;
-    //cout << "  glLoadIdentity: " << SDL_GetTicks() << endl;
     glLoadIdentity();
-    //cout << "  glLoadIdentity Done: " << SDL_GetTicks() << endl;
 
     SDL_mutexP(m_pLock);
     float interpolation = float( SDL_GetTicks() + SKIP_TICKS - m_iNextGameTick ) / float( SKIP_TICKS );
-    //cout << "  myGame.Draw: " << SDL_GetTicks() << endl;
     Draw(interpolation); // call this in child class
     SDL_mutexV(m_pLock);
-    //cout << "  myGame.Draw Done: " << SDL_GetTicks() << endl;
 
-    //SDL_Flip(m_pScreen);
-    //cout << "  SDL_GL_SwapBuffers: " << SDL_GetTicks() << endl;
-    //glFinish();
-    //glFlush();
     SDL_GL_SwapBuffers();
-    //glFinish();
-    //cout << "  SDL_GL_SwapBuffers Done: " << SDL_GetTicks() << endl;
-    //glFlush();
     loops++;
     if (loops % 100 == 0) {
       cout << "D: " << m_Fps.persecond() << endl;
