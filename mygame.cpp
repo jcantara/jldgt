@@ -33,5 +33,5 @@ void cMyGame::Physics() {
 }
 
 void cMyGame::Draw(float interpolation) {
-  // this is called after physics happens if there's enough time
+  // this is called after every vsync to set up drawing
 }
