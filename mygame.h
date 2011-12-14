@@ -29,6 +29,7 @@ class cMyGame: public cGame {
   private:
     cTexture* tex;
     cTexture* tex2;
+    float size;
 };
 
 #endif // MY_GAME_H

@@ -54,6 +54,7 @@ cGame::~cGame() {
 
 int cGame::Physicsloop() {
   SDL_Event event;
+  int oloop = 0;
   while( m_bGameIsRunning ) {
     int loops = 0;
     while( SDL_GetTicks() >= m_iNextGameTick && loops < MAX_FRAMESKIP) {
@@ -104,11 +105,14 @@ int cGame::Physicsloop() {
       }
 
       m_iNextGameTick += SKIP_TICKS;
+      oloop++;
       loops++;
       m_Eps.event();
       Physics(); // call this in child class
       SDL_mutexV(m_pLock);
-      cout << "P: " << m_Eps.persecond() << endl;
+      if (oloop % 1000 == 0) {
+        cout << "P: " << m_Eps.persecond() << endl;
+      }
     }
     if (loops == MAX_FRAMESKIP) {
       // computer is too slow to run game
@@ -120,6 +124,7 @@ int cGame::Physicsloop() {
 }
 
 int cGame::Drawingloop() {
+  int loops = 0;
   while(m_bGameIsRunning) {
     m_Fps.event();
 
@@ -146,7 +151,10 @@ int cGame::Drawingloop() {
     //glFinish();
     //cout << "  SDL_GL_SwapBuffers Done: " << SDL_GetTicks() << endl;
     //glFlush();
-    cout << "D: " << m_Fps.persecond() << endl;
+    loops++;
+    if (loops % 100 == 0) {
+      cout << "D: " << m_Fps.persecond() << endl;
+    }
   }
   return 0;
 }
