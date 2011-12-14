@@ -44,7 +44,7 @@ void cMyGame::Draw(float interpolation) {
 
   glBindTexture( GL_TEXTURE_2D, tex->texture );
 
-  for (int i=0; i<1000; i++) {
+  for (int i=0; i<100; i++) {
   float x = rand() % WINDOW_WIDTH;
   float y = rand() % WINDOW_HEIGHT;
   glBegin( GL_QUADS );
@@ -68,7 +68,7 @@ void cMyGame::Draw(float interpolation) {
 
   glBindTexture( GL_TEXTURE_2D, tex2->texture );
 
-  for(int i=0;i<1000;i++) {
+  for(int i=0;i<100;i++) {
   float x = rand() % WINDOW_WIDTH;
   float y = rand() % WINDOW_HEIGHT;
   glBegin( GL_QUADS );
