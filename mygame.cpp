@@ -13,8 +13,6 @@ void cMyGame::Init() {
 
 void cMyGame::End() {
   // mygame destructor
-  delete tex; tex = NULL;
-  delete tex2; tex2 = NULL;
 }
 
 void cMyGame::KeyDown(const int& iKeyEnum) {
