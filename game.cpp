@@ -5,7 +5,7 @@
 
 using namespace std;
 
-cGame::cGame() : m_Fps(50), m_Eps(50), m_TextureManager() {
+cGame::cGame() : m_TextureManager(), m_Fps(50), m_Eps(50) {
   // initialize SDL video
   if ( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_TIMER ) < 0 ) {
     cout << "Unable to init SDL: " << SDL_GetError() << endl;
