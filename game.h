@@ -55,15 +55,15 @@ class cGame
     static int StaticPhysicsloop(void* pParam) {
       return ((cGame*)pParam)->Physicsloop();
     }
+
+    // texture manager:
+    cTextureManager m_TextureManager;
   private:
     Uint32 m_iNextGameTick;
 
     // fps related:
     cEps m_Fps;
     cEps m_Eps;
-
-    // texture manager:
-    cTextureManager m_TextureManager;
 };
 
 #endif // GAME_H
