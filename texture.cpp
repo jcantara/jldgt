@@ -83,6 +83,10 @@ cTextureManager::cTextureManager() {
 
 // calls destructor for each texture
 cTextureManager::~cTextureManager() {
+  TextureMapType::iterator it;
+  for(it = Textures.begin();it!=Textures.end();it++) {
+    delete it->second;
+  }
   Textures.clear();
 }
 
