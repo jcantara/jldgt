@@ -9,9 +9,9 @@ class cDrawable {
     Draw();
 }
 
-typedef vector<cDrawable> DrawableVectorType;
+typedef vector<cDrawable*> DrawableVectorType;
 
-class cDrawableFactory {
+class cDrawableManager {
   public:
     cDrawable* Register(cDrawable* drawable);
     DrawAll();
