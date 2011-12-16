@@ -19,7 +19,7 @@ class cTexture {
     GLuint texture;
 };
 
-typedef map<string, cTexture> TextureMapType;
+typedef map<string, cTexture*> TextureMapType;
 
 class cTextureManager {
   public:

@@ -145,12 +145,10 @@ int cGame::Drawingloop() {
 }
 
 int cGame::Go() {
-  cout << "Starting Init" << endl;
   SDL_Thread *physics_thread;
 
   m_pLock = SDL_CreateMutex();
   Init(); // child class setup
-  cout << "Init Done" << endl;
 
   m_iNextGameTick = SDL_GetTicks();
   physics_thread = SDL_CreateThread(StaticPhysicsloop, this);

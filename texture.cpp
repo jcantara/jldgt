@@ -90,11 +90,10 @@ cTextureManager::~cTextureManager() {
 cTexture* cTextureManager::Load(string Filename) {
   cTexture* texture;
   if (Textures.find(Filename) != Textures.end()) {
-    texture = &Textures.find(Filename)->second;
+    texture = Textures.find(Filename)->second;
   } else {
-    cTexture* tex = new cTexture(Filename);
-    Textures[Filename] = *tex;
-    texture = &Textures[Filename];
+    Textures[Filename] = new cTexture(Filename);
+    texture = Textures[Filename];
     if (!texture)
     { 
       cout << "Unable to load texture: " << Filename << endl;
