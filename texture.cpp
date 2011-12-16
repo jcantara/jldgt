@@ -92,7 +92,8 @@ cTexture* cTextureManager::Load(string Filename) {
   if (Textures.find(Filename) != Textures.end()) {
     texture = &Textures.find(Filename)->second;
   } else {
-    Textures[Filename] = cTexture(Filename);
+    cTexture* tex = new cTexture(Filename);
+    Textures[Filename] = *tex;
     texture = &Textures[Filename];
     if (!texture)
     { 
