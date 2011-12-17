@@ -5,7 +5,7 @@ LDFLAGS=`sdl-config --cflags --libs` -lGL -lGLU
 
 all: game_bin
 
-game_bin: main.o game.o mygame.o texture.o eps.o
+game_bin: main.o game.o mygame.o texture.o eps.o drawable.o
 	$(CC) $(LDFLAGS) main.o game.o mygame.o texture.o eps.o -o game_bin
 
 main.o: main.cpp
@@ -22,6 +22,9 @@ texture.o: texture.cpp texture.h
 
 eps.o: eps.cpp eps.h
 	$(CC) $(CFLAGS) $(LDFLAGS) eps.cpp
+
+drawable.o: drawable.cpp drawable.h
+	$(CC) $(CFLAGS) $(LDFLAGS) drawable.cpp
 
 clean:
 	rm *.o
