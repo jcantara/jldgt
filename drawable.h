@@ -2,6 +2,7 @@
 #define DRAWABLE_H
 
 #include <vector>
+#include <string>
 
 class cDrawable {
   public:
@@ -13,7 +14,7 @@ typedef vector<cDrawable*> DrawableVectorType;
 
 class cDrawableManager {
   public:
-    cDrawable* Register(cDrawable* drawable);
+    cDrawable* Register(string filename, );
     DrawAll();
   private:
     DrawableVectorType Drawables;
