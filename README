@@ -1,3 +1,5 @@
+# DEPRECATED - this was a one-off project years ago and shouldn't be used for anything
+
 This is intended to be a relatively lightweight "framework" AKA template for creating games with SDL and OpenGL in C++
 
 Its purpose is to provide the basics in order to compete in the LudumDare 48-hour game-programming competitions, though should be useful outside of that arena as well. 
